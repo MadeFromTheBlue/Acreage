@@ -1,0 +1,26 @@
+                           [- AWS -]
+                              ||
+                           has many
+                              ||
+                      [---- Instances ----]
+                       //                \\
+                   have one            have one
+                     //                    \\
+         [- Web Server -]            [- Game Server -]
+              ||                             ||
+            has one                        has one
+              ||                             ||
+   [- Matchmaking System -]        [- Master Node.js Process -]
+                                             ||
+                                           has many?
+                                             ||
+                                   [- Child Node.js Process -]?
+                                     //                   \\
+                                 has many                has one
+                                   //                       \\
+                          [- Game Instances -] <----- [- Content Object -]      
+
+
+
+The web server hosts all the pretty web pages for the web site including the acual game client and matchmaking client. It also hosts the matchmaking system. Once a player's game client has been opened with an id for an assigned game instance from the matchmaking system, it connects (using websockets) to the game server. 
+The game server should have been informed that a new game instance with a cirtain id has been created before clients start connecting. A game server process (see "Child Node.js Process") will handle the incoming websocket connections. There should be a way to make sure all connections for a cirtain game go to a specific process.
